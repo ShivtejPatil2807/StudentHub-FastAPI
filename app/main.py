@@ -1,4 +1,3 @@
-
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.templating import Jinja2Templates
 
