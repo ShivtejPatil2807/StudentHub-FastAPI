@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.templating import Jinja2Templates
+from app.schemas import StudentCreate , StudentResponse
 
 app = FastAPI(
     title="StudentHub",
@@ -75,10 +76,10 @@ def get_student(student_id: int):
 
 # POST: Add new student
 @app.post("/students", status_code=201)
-def add_student(student: dict):
+def add_student(student: StudentCreate):
 
     new_student = {
-        **student,
+        **student.model_dump(),
         "id": max(
             (s["id"] for s in students),
             default=0
@@ -95,13 +96,14 @@ def add_student(student: dict):
 
 # PUT: Update student
 @app.put("/students/{student_id}")
-def update_student(student_id: int, updated_data: dict):
+def update_student(student_id: int, updated_data: StudentCreate):
 
     for index, student in enumerate(students):
+
         if student["id"] == student_id:
 
             students[index] = {
-                **updated_data,
+                **updated_data.model_dump(),
                 "id": student_id
             }
 
