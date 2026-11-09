@@ -1,6 +1,10 @@
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.templating import Jinja2Templates
 from app.schemas import StudentCreate , StudentResponse
+from app.database import engine,Base
+from app import models
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="StudentHub",
