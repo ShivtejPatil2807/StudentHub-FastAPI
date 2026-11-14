@@ -14,3 +14,5 @@ class StudentResponse(BaseModel):
     name: str
     email: EmailStr
     course: str
+
+    model_config = ConfigDict(from_attributes=True)
